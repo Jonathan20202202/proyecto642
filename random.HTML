@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Random</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            width: 100vw;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        #chatbox {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        #message {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #send-button {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+
+        #send-button:hover {
+            background-color: #45a049;
+        }
+
+        #cancel-button {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #cancel-button:hover {
+            background-color: #d32f2f;
+        }
+
+        .message-animation {
+            animation-name: slideIn;
+            animation-duration: 0.5s;
+        }
+
+        .message {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .message.other {
+            justify-content: flex-end;
+        }
+
+        .message .sender {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .message .content {
+            background-color: #f9f9f9;
+            padding: 8px;
+            border-radius: 4px;
+            max-width: 80%;
+        }
+        
+        .emojis-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        
+        .emoji {
+            cursor: pointer;
+            font-size: 20px;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Chat Random</h1>
+        <div id="chatbox"></div>
+        <input type="text" id="message" placeholder="Escribe un mensaje..." onkeypress="handleKeyPress(event)" />
+        <button id="send-button" onclick="enviarMensaje()">Enviar</button>
+        <button id="cancel-button" onclick="cancelarChat()">Cancelar Chat</button>
+
+        <div class="emojis-container">
+            <span class="emoji" onclick="agregarEmoji('😊')">😊</span>
+            <span class="emoji" onclick="agregarEmoji('👍')">👍</span>
+            <span class="emoji" onclick="agregarEmoji('❤️')">❤️</span>
+            <span class="emoji" onclick="agregarEmoji('🎉')">🎉</span>
+            <span class="emoji" onclick="agregarEmoji('😂')">😂</span>
+            <span class="emoji" onclick="agregarEmoji('🤔')">🤔</span>
+            <span class="emoji" onclick="agregarEmoji('🥳')">🥳</span>
+            <span class="emoji" onclick="agregarEmoji('👨')">👨</span>
+            <span class="emoji" onclick="agregarEmoji('👩')">👩</span>
+        </div>
+    </div>
+
+    <script>
+        const chatbox = document.getElementById('chatbox');
+        const messageInput = document.getElementById('message');
+
+        function enviarMensaje() {
+            const message = messageInput.value;
+            if (message.trim() !== '') {
+                agregarMensaje('Tú', message, 'self');
+                messageInput.value = '';
+            }
+        }
+
+        function agregarMensaje(sender, content, messageType) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', messageType);
+            
+            const senderSpan = document.createElement('span');
+            senderSpan.classList.add('sender');
+            senderSpan.textContent = sender;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.classList.add('content');
+            contentDiv.textContent = content;
+
+            messageDiv.appendChild(senderSpan);
+            messageDiv.appendChild(contentDiv);
+            chatbox.appendChild(messageDiv);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        function agregarEmoji(emoji) {
+            messageInput.value += emoji;
+            messageInput.focus();
+        }
+
+        function cancelarChat() {
+            chatbox.innerHTML = '';
+        }
+        
+        function handleKeyPress(event) {
+            if (event.keyCode === 13) {
+                enviarMensaje();
+                event.preventDefault();
+            }
+        }
+        
+        // Detectar el sistema operativo del dispositivo
+        function getOS() {
+            const userAgent = window.navigator.userAgent,
+                platform = window.navigator.platform,
+                macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
+                windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
+                iosPlatforms = ['iPhone', 'iPad', 'iPod'],
+                os = {};
+
+            if (macosPlatforms.indexOf(platform) !== -1) {
+                os.name = 'Mac OS';
+                os.color = 'red';
+            } else if (iosPlatforms.indexOf(platform) !== -1) {
+                os.name = 'iOS';
+                os.color = 'red';
+            } else if (windowsPlatforms.indexOf(platform) !== -1) {
+                os.name = 'Windows';
+                os.color = 'blue';
+            } else if (/Android/.test(userAgent)) {
+                os.name = 'Android';
+                os.color = 'green';
+            } else {
+                os.name = 'Unknown';
+                os.color = 'black';
+            }
+
+            return os;
+        }
+
+        // Cambiar el color del texto según el sistema operativo
+        const os = getOS();
+        if (os.name === 'Windows') {
+            document.body.style.color = 'blue';
+        } else if (os.name === 'Android') {
+            document.body.style.color = 'green';
+        } else if (os.name === 'iOS') {
+            document.body.style.color = 'red';
+        }
+    </script>
+</body>
+</html>
