@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatConnect - Conecta con Extraños</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-comments"></i>
+                <h1>ChatConnect</h1>
+            </div>
+            <div class="online-counter">
+                <div class="pulse-dot"></div>
+                <span id="onlineCount">247</span> en línea
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Welcome Screen -->
+            <div id="welcomeScreen" class="welcome-screen">
+                <div class="welcome-card">
+                    <div class="welcome-icon">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <h2>Conecta con personas de todo el mundo</h2>
+                    <p>Chatea de forma anónima y segura con extraños. ¡Haz nuevos amigos!</p>
+                    <div class="welcome-buttons">
+                        <button id="startChatBtn" class="btn btn-primary">
+                            <i class="fas fa-play"></i>
+                            Comenzar Chat
+                        </button>
+                        <button id="settingsBtn" class="btn btn-secondary">
+                            <i class="fas fa-cog"></i>
+                            Configuración
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Interface -->
+            <div id="chatInterface" class="chat-interface hidden">
+                <div class="chat-header">
+                    <div class="stranger-info">
+                        <div class="avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="info">
+                            <span class="name">Extraño</span>
+                            <span class="status" id="connectionStatus">Conectando...</span>
+                        </div>
+                    </div>
+                    <div class="chat-actions">
+                        <button id="nextBtn" class="btn btn-small">
+                            <i class="fas fa-forward"></i>
+                            Siguiente
+                        </button>
+                        <button id="endChatBtn" class="btn btn-small btn-danger">
+                            <i class="fas fa-times"></i>
+                            Terminar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <div class="system-message">
+                        <i class="fas fa-info-circle"></i>
+                        Te has conectado con un extraño. ¡Sé respetuoso!
+                    </div>
+                </div>
+
+                <div class="chat-input-container">
+                    <div class="typing-indicator hidden" id="typingIndicator">
+                        <span>El extraño está escribiendo</span>
+                        <div class="typing-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="messageInput" placeholder="Escribe tu mensaje..." maxlength="500">
+                        <button id="sendBtn" class="send-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Modal -->
+            <div id="settingsModal" class="modal hidden">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Configuración</h3>
+                        <button id="closeSettings" class="close-btn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="setting-group">
+                            <label>Tu nombre (opcional)</label>
+                            <input type="text" id="usernameInput" placeholder="Anónimo" maxlength="20">
+                        </div>
+                        <div class="setting-group">
+                            <label>Intereses</label>
+                            <input type="text" id="interestsInput" placeholder="música, deportes, tecnología..." maxlength="100">
+                        </div>
+                        <div class="setting-group">
+                            <label>Sonidos</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="soundToggle" checked>
+                                <span class="slider"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="saveSettings" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 ChatConnect. Chatea de forma segura y responsable.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
